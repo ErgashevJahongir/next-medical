@@ -1,7 +1,17 @@
-import '../styles/globals.css'
+import React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Layout from '../components/Layout';
+import './../styles/index.css';
+import GlobalStyle from '../styles/globalStyle';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+    return (
+        <Layout>
+            <GlobalStyle />
+            <CssBaseline />
+            <Component {...pageProps} />;
+        </Layout>
+    );
 }
 
-export default MyApp
+export default MyApp;
