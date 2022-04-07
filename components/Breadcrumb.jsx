@@ -60,54 +60,46 @@ export const Breadcrumb = ({ setExpanded }) => {
             aria-label="breadcrumb"
             className="center"
         >
-            <Link style={breadcrumbColor} href="#" passHref>
-                <HomeIcon />
+            <Link href="/" passHref>
+                <a>
+                    <HomeIcon style={breadcrumbColor} />
+                </a>
             </Link>
-            <Link
-                passHref
-                style={breadcrumbColor}
-                onClick={handleChange('panel1')}
-                href="/weight-loss-surgery/overview"
-            >
-                Weight Loss Surgery
+            <Link passHref href="/weight-loss-surgery/overview">
+                <a onClick={handleChange('panel1')} style={breadcrumbColor}>
+                    Weight Loss Surgery
+                </a>
             </Link>
             {routes.map((rout) => {
                 if (rout.path === location.pathname) {
-                    // let position = rout.breadcrumb.search('/');
-                    // console.log(location);
-                    // if (position > 0) {
-                    //     let frist = rout.breadcrumb.slice(0, position - 1);
-                    //     let second = rout.breadcrumb.slice(
-                    //         position + 2,
-                    //         rout.breadcrumb.length - 1
-                    //     );
-                    //     return (
-                    //         <Typography key={rout.breadcrumb + 'a'}>
-                    //             <Link
-                    //                 style={breadcrumbColor}
-                    //                 href={rout.path}
-                    //                 key={rout.breadcrumb}
-                    //             >
-                    //                 {frist}
-                    //                 {' / '}
-                    //             </Link>
-                    //             <Link
-                    //                 style={activeBreadcrumbColor}
-                    //                 href={rout.path}
-                    //                 key={rout.path}
-                    //             >
-                    //                 {second}
-                    //             </Link>
-                    //         </Typography>
-                    //     );
-                    // }
+                    let position = rout.breadcrumb.search('/');
+                    if (position > 0) {
+                        let frist = rout.breadcrumb.slice(0, position - 1);
+                        let second = rout.breadcrumb.slice(
+                            position + 2,
+                            rout.breadcrumb.length - 1
+                        );
+                        return (
+                            <Typography key={rout.breadcrumb + 'a'}>
+                                <Link href={rout.path} key={rout.breadcrumb}>
+                                    <a style={breadcrumbColor}>
+                                        {frist}
+                                        {' / '}
+                                    </a>
+                                </Link>
+                                <Link href={rout.path} key={rout.path}>
+                                    <a style={activeBreadcrumbColor}>
+                                        {second}
+                                    </a>
+                                </Link>
+                            </Typography>
+                        );
+                    }
                     return (
-                        <Link
-                            style={activeBreadcrumbColor}
-                            href={rout.path}
-                            key={rout.breadcrumb}
-                        >
-                            {rout.breadcrumb}
+                        <Link href={rout.path} key={rout.breadcrumb}>
+                            <a style={activeBreadcrumbColor}>
+                                {rout.breadcrumb}
+                            </a>
                         </Link>
                     );
                 }

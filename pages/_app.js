@@ -7,9 +7,12 @@ import GlobalStyle from '../styles/globalStyle';
 function MyApp({ Component, pageProps }) {
     return (
         <Layout>
+            {/* <StyledProvider>
+
+            </StyledProvider> */}
             <GlobalStyle />
             <CssBaseline />
-            <Component {...pageProps} />;
+            <Component {...pageProps} />
         </Layout>
     );
 }

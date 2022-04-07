@@ -15,7 +15,7 @@
 
 .section {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     padding: 50px 0;
 }
 
@@ -27,6 +27,12 @@
 .active,
 .link:hover {
     background-color: #f8f8f8;
+}
+
+.MuiAccordion-root:hover .MuiIconButton-root,
+.active .MuiIconButton-root {
+    background-color: #f8f8f8 !important;
+    border-radius: 0 !important;
 }
 
 .active .effet,
@@ -55,15 +61,43 @@
     font-weight: 900;
 }
 
-/* .slick-next:before {
-    content: '\f1ea' !important;
-    font-family: 'Font Awesome 5 Free' !important;
+/* .MuiIconButton-root {
+    background-color: #f8f8f8 !important;
+    border-radius: 0 !important;
+} */
+
+.MuiIconButton-edgeEnd {
+    margin-right: 0 !important;
 }
 
-.slick-prev:before {
-    content: '\10f007' !important;
-    font-family: 'Font Awesome 5 Free' !important;
-}  */
+.MuiAccordionSummary-root {
+    padding: 0 !important;
+}
+
+.MuiAccordionSummary-content {
+    margin: 0 !important;
+}
+
+.MuiTypography-body1 {
+    width: 100% !important;
+}
+
+.MuiAccordion-root {
+    box-shadow: none !important;
+}
+
+.MuiAccordion-root.Mui-expanded {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
+.MuiAccordionSummary-root.Mui-expanded {
+    min-height: 47px !important;
+}
+
+.MuiListItem-root {
+    padding: 0 !important;
+}
 
 @media screen and (max-width: 768px) {
     .section {

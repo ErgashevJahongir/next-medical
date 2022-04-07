@@ -1,4 +1,17 @@
 import styled from 'styled-components';
+import Accordion from '@material-ui/core/Accordion';
+import { AccordionSummary } from '@material-ui/core';
+
+export const StyledAccordion = styled(Accordion)`
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    box-shadow: none;
+    &:first-child {
+        border-top: 1px solid rgba(0, 0, 0, 0.125);
+    }
+    &::before {
+        display: none;
+    }
+`;
 
 export const Container = styled.div`
     margin: 0 auto;
@@ -181,15 +194,15 @@ export const linkStyle = {
     display: 'block',
     width: '100%',
     color: 'inherit',
-    // padding: '12px 10px 12px 0',
+    padding: '12px 0',
     textDecoration: 'none',
 };
 
 export const linkStyleAccordion = {
     display: 'block',
-    width: '100%',
+
     textDecoration: 'none',
-    padding: '8px 10px 8px 0',
+    padding: '8px 0 8px 22px',
 };
 
 export const ProceduresHeading2 = styled.h2`

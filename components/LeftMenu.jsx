@@ -1,24 +1,22 @@
 import { Grid } from '@material-ui/core';
-import { createStyles, makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
-import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import MuiListItem from '@material-ui/core/ListItem';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
-import MuiTypography from '@material-ui/core/Typography';
+import Typography from '@material-ui/core/Typography';
 import {
     LeftContentMenu,
     linkStyle,
     linkStyleAccordion,
     SpanColor,
+    StyledAccordion,
 } from '../styles/section.style';
 import Link from 'next/link';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const ListItem = withStyles({
-    root: {
-        padding: '0 0 0 22px',
-    },
     button: {
         '&:hover': {
             backgroundColor: '#f8f8f8',
@@ -33,39 +31,11 @@ const AccordionDetails = withStyles({
     },
 })(MuiAccordionDetails);
 
-const Accordion = withStyles({
-    root: {
-        borderBottom: '1px solid rgba(0, 0, 0, .125)',
-        boxShadow: 'none',
-        '&:first-child': {
-            borderTop: '1px solid rgba(0, 0, 0, .125)',
-        },
-        '&:before': {
-            display: 'none',
-        },
-        '&$expanded': {
-            margin: '0',
-        },
-    },
-    expanded: {
-        margin: 0,
-    },
-})(MuiAccordion);
-
 const AccordionSummary = withStyles({
     root: {
-        marginBottom: -1,
-        padding: '0',
+        marginBottom: 0,
         '&$expanded': {
-            minHeight: 48,
-        },
-    },
-    content: {
-        '&$content': {
-            margin: 0,
-        },
-        '&$expanded': {
-            margin: 0,
+            minHeight: 47,
         },
     },
     expanded: {
@@ -73,87 +43,67 @@ const AccordionSummary = withStyles({
     },
 })(MuiAccordionSummary);
 
-const Typography = withStyles({
-    root: {
-        width: '100%',
+const routes = [
+    {
+        path: '/weight-loss-surgery/procedures/roux-en-y-gastric-bypass',
+        breadcrumb: 'Procedures / Roux-en-Y Gastric Bypass',
     },
-})(MuiTypography);
-
-const useStyles = makeStyles((theme) =>
-    createStyles({
-        heading: {
-            fontSize: theme.typography.pxToRem(15),
-            fontWeight: theme.typography.fontWeightRegular,
-        },
-        expanded: {
-            padding: '0px',
-        },
-    })
-);
-
-// const routes = [
-//     {
-//         path: '/',
-//         breadcrumb: 'Overview',
-//     },
-//     {
-//         path: '/procedures/roux-en-y-gastric-bypass',
-//         breadcrumb: 'Procedures / Roux-en-Y Gastric Bypass',
-//     },
-//     {
-//         path: '/procedures/sleeve-gastrectomy',
-//         breadcrumb: 'Procedures / Sleeve Gastrectomy',
-//     },
-//     {
-//         path: '/procedures/mini-gastric-bypass',
-//         breadcrumb: 'Procedures / Mini Gastric Bypass',
-//     },
-//     {
-//         path: '/procedures/banded-bariatric-procedures',
-//         breadcrumb: 'Procedures / Banded Bariatric Procedures',
-//     },
-//     {
-//         path: '/procedures/gastric-banding',
-//         breadcrumb: 'Procedures / Gastric Banding',
-//     },
-//     {
-//         path: '/procedures/intra-gastric-balloon',
-//         breadcrumb: 'Procedures / Intra Gastric Balloon',
-//     },
-//     {
-//         path: '/candidate',
-//         breadcrumb: 'Are You A Candidate',
-//     },
-//     {
-//         path: '/faqs',
-//         breadcrumb: 'FAQs',
-//     },
-// ];
+    {
+        path: '/weight-loss-surgery/procedures/sleeve-gastrectomy',
+        breadcrumb: 'Procedures / Sleeve Gastrectomy',
+    },
+    {
+        path: '/weight-loss-surgery/procedures/mini-gastric-bypass',
+        breadcrumb: 'Procedures / Mini Gastric Bypass',
+    },
+    {
+        path: '/weight-loss-surgery/procedures/banded-bariatric-procedures',
+        breadcrumb: 'Procedures / Banded Bariatric Procedures',
+    },
+    {
+        path: '/weight-loss-surgery/procedures/gastric-banding',
+        breadcrumb: 'Procedures / Gastric Banding',
+    },
+    {
+        path: '/weight-loss-surgery/procedures/intra-gastric-balloon',
+        breadcrumb: 'Procedures / Intra Gastric Balloon',
+    },
+];
 
 const LeftMenu = ({ expanded, setExpanded }) => {
-    const classes = useStyles();
-
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
-        // localStorage.setItem('name', JSON.stringify(panel));
     };
+    const pathname = useRouter().pathname;
+
+    useEffect(() => {
+        if (pathname === '/weight-loss-surgery/overview') {
+            setExpanded('panel1');
+        } else if (pathname === '/weight-loss-surgery/candidate') {
+            setExpanded('panel3');
+        } else if (pathname === '/weight-loss-surgery/faqs') {
+            setExpanded('panel4');
+        } else {
+            for (let i = 0; i < routes.length; i++) {
+                if (routes[i].path === pathname) {
+                    setExpanded('panel2');
+                }
+            }
+        }
+    }, []);
+
     return (
         <LeftContentMenu>
-            <Accordion
+            <StyledAccordion
                 expanded={expanded === 'panel1'}
                 onChange={handleChange('panel1')}
             >
                 <AccordionSummary
-                    className={classes.panelSummary}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Typography className={classes.heading}>
-                        <Link
-                            passHref
-                            // style={linkStyle}
-                            href="/weight-loss-surgery/overview"
-                        >
+                    <Typography>
+                        <Link passHref href="/weight-loss-surgery/overview">
                             <a
                                 style={linkStyle}
                                 className={
@@ -166,26 +116,19 @@ const LeftMenu = ({ expanded, setExpanded }) => {
                         </Link>
                     </Typography>
                 </AccordionSummary>
-            </Accordion>
-            <Accordion
+            </StyledAccordion>
+            <StyledAccordion
                 expanded={expanded === 'panel2'}
                 onChange={handleChange('panel2')}
+                className={expanded === 'panel2' && 'active'}
             >
                 <AccordionSummary
-                    className={classes.panelSummary}
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel2a-header"
                 >
-                    <Typography className={classes.heading}>
-                        <Link
-                            passHref
-                            href="#"
-                            style={linkStyle}
-                            className={
-                                expanded === 'panel2' ? 'active' : 'link'
-                            }
-                        >
+                    <Typography>
+                        <Link passHref href="#">
                             <a
                                 style={linkStyle}
                                 className={
@@ -200,117 +143,148 @@ const LeftMenu = ({ expanded, setExpanded }) => {
                 </AccordionSummary>
                 <AccordionDetails>
                     <Grid container direction="column">
-                        <ListItem
-                            className={classes.innerMenuItem}
-                            button
-                            key={1}
-                        >
-                            <Typography className={classes.heading}>
+                        <ListItem button key={1}>
+                            <Typography>
                                 <Link
                                     passHref
                                     href="/weight-loss-surgery/procedures/roux-en-y-gastric-bypass"
                                 >
-                                    <SpanColor className="listLink">
-                                        Roux-en-Y Gastric Bypass
-                                    </SpanColor>
+                                    <a
+                                        style={linkStyleAccordion}
+                                        className={
+                                            pathname ===
+                                            '/weight-loss-surgery/procedures/roux-en-y-gastric-bypass'
+                                                ? 'active listLink'
+                                                : 'listLink'
+                                        }
+                                    >
+                                        <SpanColor>
+                                            Roux-en-Y Gastric Bypass
+                                        </SpanColor>
+                                    </a>
                                 </Link>
                             </Typography>
                         </ListItem>
-                        <ListItem
-                            className={classes.innerMenuItem}
-                            button
-                            key={2}
-                        >
-                            <Typography className={classes.heading}>
+                        <ListItem button key={2}>
+                            <Typography>
                                 <Link
                                     passHref
                                     href="/weight-loss-surgery/procedures/sleeve-gastrectomy"
-                                    className="listLink"
-                                    style={linkStyleAccordion}
                                 >
-                                    <SpanColor>Sleeve Gastrectomy</SpanColor>
+                                    <a
+                                        className={
+                                            pathname ===
+                                            '/weight-loss-surgery/procedures/sleeve-gastrectomy'
+                                                ? 'active listLink'
+                                                : 'listLink'
+                                        }
+                                        style={linkStyleAccordion}
+                                    >
+                                        <SpanColor>
+                                            Sleeve Gastrectomy
+                                        </SpanColor>
+                                    </a>
                                 </Link>
                             </Typography>
                         </ListItem>
-                        <ListItem
-                            className={classes.innerMenuItem}
-                            button
-                            key={3}
-                        >
-                            <Typography className={classes.heading}>
+                        <ListItem button key={3}>
+                            <Typography>
                                 <Link
                                     passHref
                                     href="/weight-loss-surgery/procedures/mini-gastric-bypass"
-                                    className="listLink"
-                                    style={linkStyleAccordion}
                                 >
-                                    <SpanColor>Mini Gastric Bypass</SpanColor>
+                                    <a
+                                        className={
+                                            pathname ===
+                                            '/weight-loss-surgery/procedures/mini-gastric-bypass'
+                                                ? 'active listLink'
+                                                : 'listLink'
+                                        }
+                                        style={linkStyleAccordion}
+                                    >
+                                        <SpanColor>
+                                            Mini Gastric Bypass
+                                        </SpanColor>
+                                    </a>
                                 </Link>
                             </Typography>
                         </ListItem>
-                        <ListItem
-                            className={classes.innerMenuItem}
-                            button
-                            key={4}
-                        >
-                            <Typography className={classes.heading}>
+                        <ListItem button key={4}>
+                            <Typography>
                                 <Link
                                     passHref
                                     href="/weight-loss-surgery/procedures/banded-bariatric-procedures"
-                                    className="listLink"
-                                    style={linkStyleAccordion}
                                 >
-                                    <SpanColor>
-                                        Banded Bariatric Procedures
-                                    </SpanColor>
+                                    <a
+                                        className={
+                                            pathname ===
+                                            '/weight-loss-surgery/procedures/banded-bariatric-procedures'
+                                                ? 'active listLink'
+                                                : 'listLink'
+                                        }
+                                        style={linkStyleAccordion}
+                                    >
+                                        <SpanColor>
+                                            Banded Bariatric Procedures
+                                        </SpanColor>
+                                    </a>
                                 </Link>
                             </Typography>
                         </ListItem>
-                        <ListItem
-                            className={classes.innerMenuItem}
-                            button
-                            key={5}
-                        >
-                            <Typography className={classes.heading}>
+                        <ListItem button key={5}>
+                            <Typography>
                                 <Link
                                     passHref
                                     href="/weight-loss-surgery/procedures/gastric-banding"
-                                    className="listLink"
-                                    style={linkStyleAccordion}
                                 >
-                                    <SpanColor>Gastric Banding</SpanColor>
+                                    <a
+                                        className={
+                                            pathname ===
+                                            '/weight-loss-surgery/procedures/gastric-banding'
+                                                ? 'active listLink'
+                                                : 'listLink'
+                                        }
+                                        style={linkStyleAccordion}
+                                    >
+                                        <SpanColor>Gastric Banding</SpanColor>
+                                    </a>
                                 </Link>
                             </Typography>
                         </ListItem>
-                        <ListItem
-                            className={classes.innerMenuItem}
-                            button
-                            key={6}
-                        >
-                            <Typography className={classes.heading}>
+                        <ListItem button key={6}>
+                            <Typography>
                                 <Link
                                     passHref
                                     href="/weight-loss-surgery/procedures/intra-gastric-balloon"
-                                    className="listLink"
-                                    style={linkStyleAccordion}
                                 >
-                                    <SpanColor>Intra Gastric Balloon</SpanColor>
+                                    <a
+                                        className={
+                                            pathname ===
+                                            '/weight-loss-surgery/procedures/intra-gastric-balloon'
+                                                ? 'active listLink'
+                                                : 'listLink'
+                                        }
+                                        style={linkStyleAccordion}
+                                    >
+                                        <SpanColor>
+                                            Intra Gastric Balloon
+                                        </SpanColor>
+                                    </a>
                                 </Link>
                             </Typography>
                         </ListItem>
                     </Grid>
                 </AccordionDetails>
-            </Accordion>
-            <Accordion
+            </StyledAccordion>
+            <StyledAccordion
                 expanded={expanded === 'panel3'}
                 onChange={handleChange('panel3')}
             >
                 <AccordionSummary
-                    className={classes.panelSummary}
                     aria-controls="panel1a-content"
                     id="panel3a-header"
                 >
-                    <Typography className={classes.heading}>
+                    <Typography>
                         <Link
                             passHref
                             href="/weight-loss-surgery/candidate"
@@ -328,20 +302,16 @@ const LeftMenu = ({ expanded, setExpanded }) => {
                         </Link>
                     </Typography>
                 </AccordionSummary>
-            </Accordion>
-            <Accordion
+            </StyledAccordion>
+            <StyledAccordion
                 expanded={expanded === 'panel4'}
                 onChange={handleChange('panel4')}
             >
                 <AccordionSummary
-                    className={classes.panelSummary}
                     aria-controls="panel1a-content"
                     id="panel4a-header"
                 >
-                    <Typography
-                        className={classes.heading}
-                        style={{ margin: ' 0' }}
-                    >
+                    <Typography style={{ margin: ' 0' }}>
                         <Link
                             passHref
                             href="/weight-loss-surgery/faqs"
@@ -359,7 +329,7 @@ const LeftMenu = ({ expanded, setExpanded }) => {
                         </Link>
                     </Typography>
                 </AccordionSummary>
-            </Accordion>
+            </StyledAccordion>
         </LeftContentMenu>
     );
 };
